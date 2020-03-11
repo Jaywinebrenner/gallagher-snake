@@ -13,28 +13,28 @@ bgImage.onload = function () {
 };
 bgImage.src = "images/border.png";
 
-// Hero image
-var heroReady = false;
-var heroImage = new Image();
-heroImage.onload = function () {
-	heroReady = true;
+// gallagher image
+var gallagherReady = false;
+var gallagherImage = new Image();
+gallagherImage.onload = function () {
+	gallagherReady = true;
 };
-heroImage.src = "images/gallagher.png";
+gallagherImage.src = "images/gallagher.png";
 
-// Monster image
-var monsterReady = false;
-var monsterImage = new Image();
-monsterImage.onload = function () {
-	monsterReady = true;
+// watermelon image
+var watermelonReady = false;
+var watermelonImage = new Image();
+watermelonImage.onload = function () {
+	watermelonReady = true;
 };
-monsterImage.src = "images/watermelon.png";
+watermelonImage.src = "images/watermelon.png";
 
 // Game objects
-var hero = {
+var gallagher = {
 	speed: 256 // movement in pixels per second
 };
-var monster = {};
-var monstersCaught = 0;
+var watermelon = {};
+var watermelonsCaught = 0;
 
 // Handle keyboard controls
 var keysDown = {};
@@ -47,39 +47,39 @@ addEventListener("keyup", function (e) {
 	delete keysDown[e.keyCode];
 }, false);
 
-// Reset the game when the player catches a monster
+// Reset the game when the player catches a watermelon
 var reset = function () {
-	hero.x = canvas.width / 2;
-	hero.y = canvas.height / 2;
+	gallagher.x = canvas.width / 2;
+	gallagher.y = canvas.height / 2;
 
-	// Throw the monster somewhere on the screen randomly
-	monster.x = 32 + (Math.random() * (canvas.width - 64));
-	monster.y = 32 + (Math.random() * (canvas.height - 64));
+	// Throw the watermelon somewhere on the screen randomly
+	watermelon.x = 32 + (Math.random() * (canvas.width - 64));
+	watermelon.y = 32 + (Math.random() * (canvas.height - 64));
 };
 
 // Update game objects
 var update = function (modifier) {
 	if (38 in keysDown) { // Player holding up
-		hero.y -= hero.speed * modifier;
+		gallagher.y -= gallagher.speed * modifier;
 	}
 	if (40 in keysDown) { // Player holding down
-		hero.y += hero.speed * modifier;
+		gallagher.y += gallagher.speed * modifier;
 	}
 	if (37 in keysDown) { // Player holding left
-		hero.x -= hero.speed * modifier;
+		gallagher.x -= gallagher.speed * modifier;
 	}
 	if (39 in keysDown) { // Player holding right
-		hero.x += hero.speed * modifier;
+		gallagher.x += gallagher.speed * modifier;
 	}
 
 	// Are they touching?
 	if (
-		hero.x <= (monster.x + 100)
-		&& monster.x <= (hero.x + 100)
-		&& hero.y <= (monster.y + 100)
-		&& monster.y <= (hero.y + 100)
+		gallagher.x <= (watermelon.x + 100)
+		&& watermelon.x <= (gallagher.x + 100)
+		&& gallagher.y <= (watermelon.y + 100)
+		&& watermelon.y <= (gallagher.y + 100)
 	) {
-		++monstersCaught;
+		++watermelonsCaught;
 		reset();
 	}
 };
@@ -90,12 +90,12 @@ var render = function () {
 		ctx.drawImage(bgImage, 0, 0);
 	}
 
-	if (heroReady) {
-		ctx.drawImage(heroImage, hero.x, hero.y);
+	if (gallagherReady) {
+		ctx.drawImage(gallagherImage, gallagher.x, gallagher.y);
 	}
 
-	if (monsterReady) {
-		ctx.drawImage(monsterImage, monster.x, monster.y);
+	if (watermelonReady) {
+		ctx.drawImage(watermelonImage, watermelon.x, watermelon.y);
 	}
 
 	// Score
@@ -103,7 +103,7 @@ var render = function () {
 	ctx.font = "24px Helvetica";
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
-	// ctx.fillText("Watermelons Smashed: " + monstersCaught, 32, 32);
+	ctx.fillText("Watermelons: " + watermelonsCaught, 32, 32);
 };
 
 // The main game loop
