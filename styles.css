@@ -1,0 +1,17 @@
+h1, p{
+  font-family: 'Press Start 2P', cursive;
+}
+
+
+h1{
+  margin-left: 80px;
+}
+
+.top{
+  margin-left: 70px;
+  line-height: 0;
+}
+.bottom{
+  margin-left: 200px;
+    line-height: 0;
+}
